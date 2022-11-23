@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" href="./assets/css/styles.css" />
+
+    <script defer src="./assets/js/main.js"></script>
+
+    <title>Gestao de Tempo por Tarefas</title>
+  </head>
+  <body>
+    <aside></aside>
+    <header>
+      <img class="logo-smn" src="./assets/img/logoSMN.png" alt="logo-SMN" />
+    </header>
+    <main>
+      <section class="visor">
+        <div class="filtros">
+          <div class="campos-visor">
+            <label for="procurar"></label>
+            <input
+              id="visorProcurar"
+              class="campos"
+              type="text"
+              name="procurar"
+              placeholder="Procurar"
+            />
+          </div>
+          <div class="campos-visor">
+            <label for="filtrar"></label>
+            <select id="visorFiltrar" class="campos" name="filtrar">
+              <option value="Usuario">Usuario</option>
+              <option value="Atividade">Atividade</option>
+              <option value="Tipo de Atividade">Tipo de Atividade</option>
+            </select>
+          </div>
+        </div>
+        <div class="cadastros">
+          <div class="campos-visor">
+            <label for="usuario">Usuario</label>
+            <input
+              id="visorUsuario"
+              class="campos"
+              type="text"
+              name="usuario"
+            />
+          </div>
+          <div class="campos-visor">
+            <label for="atividade">Atividade</label>
+            <input
+              id="visorAtividade"
+              class="campos"
+              type="text"
+              name="atividade"
+            />
+          </div>
+          <div class="campos-visor">
+            <label for="tipoAtividade">Tipo de Atividade</label>
+            <input
+              id="visorTipoAtividade"
+              class="campos"
+              type="text"
+              name="tipoAtividade"
+            />
+          </div>
+        </div>
+        <div class="cronometro">
+          <p id="relogio">00:00:00</p>
+          <div class="container-botoes">
+            <div class="botoes">
+              <label for="iniciar">iniciar</label>
+              <input
+                id="botaoIniciar"
+                class="botao"
+                type="button"
+                name="iniciar"
+              />
+            </div>
+            <div class="botoes">
+              <label for="pausar">pausar</label>
+              <input
+                id="botaoPausar"
+                class="botao pausado"
+                type="button"
+                name="pausar"
+              />
+            </div>
+            <div class="botoes">
+              <label for="finalizar">finalizar</label>
+              <input
+                id="botaoFinalizar"
+                class="botao"
+                type="button"
+                name="finalizar"
+              />
+            </div>
+          </div>
+        </div>
+      </section>
+      <section class="tabela">
+        <div>teste</div>
+      </section>
+    </main>
+  </body>
+</html>

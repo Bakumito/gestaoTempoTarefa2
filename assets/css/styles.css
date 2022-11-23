@@ -1,0 +1,141 @@
+@import url('https://fonts.googleapis.com/css2?family=Irish+Grover&family=Roboto:ital,wght@0,100;0,300;0,400;0,500;0,700;0,900;1,100;1,300;1,400;1,500;1,700;1,900&display=swap');
+
+/* -- reset -- */
+:root {
+  --fundo-aside: #333333;
+  --fundo-cinza: #CBCBCB;
+  --fundo-branco: #FFFDFD;
+  --fundo-botoes: #D9D9D9;
+}
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+html {
+  font-size: 62.5%;
+}
+
+/* -- Estrutura -- */
+body {
+  font-family: 'Roboto', sans-serif;
+  font-size: 1.6rem;
+  display: grid;
+  grid-template-rows: auto;
+  grid-template-columns: 158fr 1282fr;
+}
+
+header {
+  width: 100%;
+  justify-content: center;
+}
+  .logo-smn {
+    height: 9.5rem;
+    width: 9.5rem;
+    margin: 2.4rem;
+  }
+
+aside {
+  background-color: var(--fundo-aside);
+  width: 100%;
+  grid-row-start: 1;
+  grid-row-end: 3;
+}
+
+main {
+  background-color: var(--fundo-cinza);
+  grid-column-start: 2;
+  grid-column-end: 3;
+  padding: 7.5rem 7.9rem;
+}
+
+/* -- Display Flex -- */
+
+header, .filtros, .cadastros, .container-botoes, .botoes {
+  display: flex;
+}
+
+/* -- Visor -- */
+
+.visor {
+  background-color: var(--fundo-branco);
+  border-bottom: 1.5rem solid var(--fundo-cinza);
+  padding: 2.5rem 3.9rem;
+  display: grid;
+  grid-template-rows: auto auto;
+  grid-template-columns: 805fr 323fr;
+  border-radius: 2rem 2rem 0 0;
+}
+
+.filtros, .cadastros {
+  font-size: 2.4rem;
+}
+
+.campos-visor {
+  margin-right: 9.4rem;
+}
+
+.campos {
+  background-color: var(--fundo-botoes);
+  height: 5rem;
+  border-radius: 0.5rem;
+}
+
+.filtros {
+  margin-bottom: 3.6rem;
+}
+  .filtros #visorProcurar {
+    width: 39.2rem;
+    border: none;
+  }
+  .filtros #visorFiltrar, .cadastros #visorTipoAtividade {
+    width: 22rem;
+  }
+
+.cadastros .campos {
+  width: 14.75rem;
+  height: 2.7rem;
+}
+
+.cronometro {
+  order: 1;
+  grid-row-start: 1;
+  grid-row-end: 3;
+  grid-column-start: 2;
+  grid-column-end: 3;
+}
+  .cronometro p {    
+    font-family: 'Irish Grover', cursive;
+    font-size: 6rem;
+  }
+
+.container-botoes {
+  color: var(--fundo-branco);
+}
+
+.botoes {
+  flex-direction: column;
+}
+  .botoes:hover {
+    color: #000;
+  }
+
+.botao {
+  border: #000 solid 0.15rem;
+  border-radius: 50%;
+  width: 3.5rem;
+  height: 3.5rem;
+  margin: 0 1rem;
+}
+  .botao#botaoIniciar {background: #6B7D87 url('../img/play.svg') no-repeat center;}
+  .botao#botaoPausar {background: #6B7D87 url('../img/pause.svg') no-repeat center;}
+  .botao#botaoFinalizar {background: #6B7D87 url('../img/stop.svg') no-repeat center;}
+  .pausado#botaoPausar {background-image: url('../img/play.svg') !important;}
+
+/* -- Tabela -- */
+
+.tabela {
+  background-color: var(--fundo-branco);
+}
