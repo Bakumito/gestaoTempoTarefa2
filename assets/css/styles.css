@@ -16,6 +16,8 @@
 
 html {
   font-size: 62.5%;
+  /* max-width: 1440px; */
+  margin: auto;
 }
 
 /* -- Estrutura -- */
@@ -65,38 +67,66 @@ header, .filtros, .cadastros, .container-botoes, .botoes {
   padding: 2.5rem 3.9rem;
   display: grid;
   grid-template-rows: auto auto;
-  grid-template-columns: 805fr 323fr;
+  grid-template-columns: 816fr 456fr;
   border-radius: 2rem 2rem 0 0;
 }
 
 .filtros, .cadastros {
   font-size: 2.4rem;
-}
-
-.campos-visor {
-  margin-right: 9.4rem;
+  font-weight: 400;
 }
 
 .campos {
   background-color: var(--fundo-botoes);
   height: 5rem;
   border-radius: 0.5rem;
+  width: 100%;
+  padding-left: 2.5rem;
+  font-size: 2.2rem;
 }
 
 .filtros {
   margin-bottom: 3.6rem;
 }
-  .filtros #visorProcurar {
-    width: 39.2rem;
-    border: none;
+  .filtros .container-campos-visor:first-child {
+    width: 53%;
+  }  
+  .filtros .container-campos-visor:last-child, .cadastros .container-campos-visor:last-child {
+    padding-left: 9.4rem;
+    width: 47%;
   }
-  .filtros #visorFiltrar, .cadastros #visorTipoAtividade {
-    width: 22rem;
-  }
+    .filtros #visorProcurar {
+      border: none;
+    }
+
+.cadastros .container-campos-visor {
+  width: 26.5%;
+}
+
+.cadastros .container-campos-visor:nth-child(even) {
+  display: flex;
+  justify-content: flex-end;
+}
+
+.cadastros .campos-visor {
+  width: 85%;
+}
 
 .cadastros .campos {
-  width: 14.75rem;
   height: 2.7rem;
+}
+
+.cadastros .container-campos-visor:last-child .campos-visor {
+  width: 100%;
+}
+
+.filtros .campos-visor {
+  display: flex;
+}
+
+.filtros img {
+  padding-left: 1.6rem;  
+  margin-right: -5rem;
 }
 
 .cronometro {
@@ -105,14 +135,16 @@ header, .filtros, .cadastros, .container-botoes, .botoes {
   grid-row-end: 3;
   grid-column-start: 2;
   grid-column-end: 3;
+  text-align: center;
 }
-  .cronometro p {    
+  .cronometro p {
     font-family: 'Irish Grover', cursive;
     font-size: 6rem;
   }
 
 .container-botoes {
   color: var(--fundo-branco);
+  justify-content: center;
 }
 
 .botoes {

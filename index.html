@@ -11,59 +11,78 @@
     <title>Gestao de Tempo por Tarefas</title>
   </head>
   <body>
-    <aside></aside>
+    <aside class="barra-lateral">
+      <nav>
+        <a href="#"><img src="./assets/img/icon-person.svg" /></a>
+        <a href="#"><img src="./assets/img/icon-home.svg" /></a>
+        <a href="#"><img src="./assets/img/icon-menu.svg" /></a>
+        <a href="#"><img src="./assets/img/icon-search.svg" /></a>
+      </nav>
+    </aside>
     <header>
       <img class="logo-smn" src="./assets/img/logoSMN.png" alt="logo-SMN" />
     </header>
     <main>
       <section class="visor">
         <div class="filtros">
-          <div class="campos-visor">
-            <label for="procurar"></label>
-            <input
-              id="visorProcurar"
-              class="campos"
-              type="text"
-              name="procurar"
-              placeholder="Procurar"
-            />
+          <div class="container-campos-visor">
+            <div class="campos-visor">
+              <label for="procurar"></label>
+              <input
+                id="visorProcurar"
+                class="campos"
+                type="text"
+                name="procurar"
+                placeholder="Procurar"
+              />
+              <!-- <img src="./assets/img/search.svg" alt="procurar" /> -->
+            </div>
           </div>
-          <div class="campos-visor">
-            <label for="filtrar"></label>
-            <select id="visorFiltrar" class="campos" name="filtrar">
-              <option value="Usuario">Usuario</option>
-              <option value="Atividade">Atividade</option>
-              <option value="Tipo de Atividade">Tipo de Atividade</option>
-            </select>
+          <div class="container-campos-visor">
+            <div class="campos-visor">
+              <label for="filtrar"></label>
+              <select id="visorFiltrar" class="campos" name="filtrar">
+                <option value="Usuario">Usuario</option>
+                <option value="Atividade">Atividade</option>
+                <option value="Tipo de Atividade">Tipo de Atividade</option>
+              </select>
+              <img src="./assets/img/vassoura.svg" alt="procurar" />
+            </div>
           </div>
         </div>
         <div class="cadastros">
-          <div class="campos-visor">
-            <label for="usuario">Usuario</label>
-            <input
-              id="visorUsuario"
-              class="campos"
-              type="text"
-              name="usuario"
-            />
+          <div class="container-campos-visor">
+            <div class="campos-visor">
+              <label for="usuario">Usuario</label>
+              <input
+                id="visorUsuario"
+                class="campos"
+                type="text"
+                name="usuario"
+              />
+            </div>
           </div>
-          <div class="campos-visor">
-            <label for="atividade">Atividade</label>
-            <input
-              id="visorAtividade"
-              class="campos"
-              type="text"
-              name="atividade"
-            />
+          <div class="container-campos-visor">
+            <div class="campos-visor">
+              <label for="atividade">Atividade</label>
+              <input
+                id="visorAtividade"
+                class="campos"
+                type="text"
+                name="atividade"
+              />
+            </div>
           </div>
-          <div class="campos-visor">
-            <label for="tipoAtividade">Tipo de Atividade</label>
-            <input
-              id="visorTipoAtividade"
-              class="campos"
-              type="text"
-              name="tipoAtividade"
-            />
+          <div class="container-campos-visor">
+            <div class="campos-visor">
+              <label for="tipoAtividade">Tipo de Atividade</label>
+              <input
+                id="visorTipoAtividade"
+                class="campos"
+                type="text"
+                name="tipoAtividade"
+              />
+            </div>
           </div>
         </div>
         <div class="cronometro">
@@ -100,7 +119,21 @@
         </div>
       </section>
       <section class="tabela">
-        <div>teste</div>
+        <div id="divTabela">
+          <table id="tabela">
+            <thead>
+              <tr id="cabecalho">
+                <th>USUARIO</th>
+                <th>ATIVIDADE</th>
+                <th>TIPO DE ATIVIDADE</th>
+                <th>TEMPO</th>
+                <th>.</th>
+                <th>.</th>
+              </tr>
+            </thead>
+            <tbody id="tabelaCorpo"></tbody>
+          </table>
+        </div>
       </section>
     </main>
   </body>
