@@ -20,6 +20,16 @@ html {
   margin: auto;
 }
 
+/* -- Display Flex -- */
+
+header, .filtros, .cadastros, .container-botoes, .botoes {
+  display: flex;
+}
+
+img {
+  z-index: 5;
+}
+
 /* -- Estrutura -- */
 body {
   font-family: 'Roboto', sans-serif;
@@ -39,24 +49,11 @@ header {
     margin: 2.4rem;
   }
 
-aside {
-  background-color: var(--fundo-aside);
-  width: 100%;
-  grid-row-start: 1;
-  grid-row-end: 3;
-}
-
 main {
   background-color: var(--fundo-cinza);
   grid-column-start: 2;
   grid-column-end: 3;
   padding: 7.5rem 7.9rem;
-}
-
-/* -- Display Flex -- */
-
-header, .filtros, .cadastros, .container-botoes, .botoes {
-  display: flex;
 }
 
 /* -- Visor -- */
@@ -88,36 +85,8 @@ header, .filtros, .cadastros, .container-botoes, .botoes {
 .filtros {
   margin-bottom: 3.6rem;
 }
-  .filtros .container-campos-visor:first-child {
-    width: 53%;
-  }  
-  .filtros .container-campos-visor:last-child, .cadastros .container-campos-visor:last-child {
-    padding-left: 9.4rem;
-    width: 47%;
-  }
-    .filtros #visorProcurar {
-      border: none;
-    }
-
-.cadastros .container-campos-visor {
-  width: 26.5%;
-}
-
-.cadastros .container-campos-visor:nth-child(even) {
-  display: flex;
-  justify-content: flex-end;
-}
-
-.cadastros .campos-visor {
-  width: 85%;
-}
-
-.cadastros .campos {
-  height: 2.7rem;
-}
-
-.cadastros .container-campos-visor:last-child .campos-visor {
-  width: 100%;
+.filtros #visorProcurar {
+  border: none;
 }
 
 .filtros .campos-visor {
@@ -170,4 +139,208 @@ header, .filtros, .cadastros, .container-botoes, .botoes {
 
 .tabela {
   background-color: var(--fundo-branco);
+}
+
+
+table {
+  table-layout: fixed;
+  width: 100%;
+  border-collapse: collapse;
+}
+
+th, td {
+  height: 6.7rem;
+  font-size: 1.8rem;
+  font-weight: 700;
+}
+
+thead th {
+  width: 25%;
+  font-size: 2rem;
+  font-weight: 300;
+}
+
+td:first-child {
+  border-top-left-radius: 1rem;
+  border-bottom-left-radius: 1rem;
+}
+
+td:last-child {
+  border-bottom-right-radius: 1rem;
+  border-top-right-radius: 1rem;
+}
+
+thead th:nth-child(4){
+  width: 15%;
+}
+
+thead th:nth-child(5){
+  width: 5%;
+}
+
+thead th:nth-child(6){
+  width: 5%;
+}
+
+td {
+  text-align: center;
+}
+
+tr:nth-child(odd) {
+  background-color: var(--cinza-light);
+}
+
+thead tr:first-child {
+  background-color: var(--branco);
+}
+
+.icone-editar {
+  background: url('../img/edit.svg') no-repeat center;
+  background-size: 2.5rem;
+}
+
+.icone-lixeira {
+  background: url('../img/trash.svg') no-repeat center;
+  background-size: 2.5rem;
+}
+
+.icone-editar:hover {
+  background-image: url('../img/edit.svg');
+}
+
+.icone-lixeira:hover {
+  background-image: url('../img/trash.svg');
+}
+
+#limparFiltro {
+  margin-left: 1.5rem;
+  color: var(--branco);
+  z-index: 1;
+}
+
+#limparFiltro:hover {
+  color: #000;
+  transition: ease;
+}
+
+#limparFiltro img {
+  width: 2.5rem;
+  height: 3rem;
+  margin-left: 1.3rem;
+}
+
+.grid-visor {
+  position: relative;
+}
+
+#iconeProcurar {
+  position: absolute;
+  width: 5rem;
+  height: 5rem;
+  background: url('../img/search.svg') no-repeat 2.5rem;
+  background-size: 2.5rem;
+}
+
+
+
+
+
+
+
+
+@media screen and (min-width: 1321px) { 
+  aside {
+    background-color: var(--fundo-aside);
+    width: 100%;
+    grid-row-start: 1;
+    grid-row-end: 3;
+  }
+  nav {
+    display: flex;
+    flex-direction: column;
+    padding: 7rem;
+  }
+  asside nav a {
+    margin: 5rem;
+  }
+  .filtros .container-campos-visor:first-child {
+    width: 53%;
+  } 
+  .filtros .container-campos-visor:last-child, .cadastros .container-campos-visor:last-child {
+    padding-left: 9.4rem;
+    width: 47%;
+  }
+
+  .cadastros .container-campos-visor {
+    width: 26.5%;
+  }
+
+  .cadastros .container-campos-visor:nth-child(even) {
+    display: flex;
+    justify-content: flex-end;
+  }
+
+  .cadastros .campos-visor {
+    width: 85%;
+  }
+
+  .cadastros .campos {
+    height: 2.7rem;
+  }
+
+  .cadastros .container-campos-visor:last-child .campos-visor {
+    width: 100%;
+  }
+}
+
+@media screen and (max-width: 1320px) {
+  body {
+    display: block;
+  }
+  aside {
+    display: none;
+  }
+  header {
+    background-color: var(--fundo-cinza);
+  }
+  .logo-smn {
+    height: 4.7rem;
+    width: 4.7rem;
+    margin: 1rem;
+  }
+  main {
+    background-color: var(--fundo-branco);
+    padding: 0;
+  }
+  .visor {
+    display: flex;
+    flex-direction: column;
+    padding: 1.2rem;
+    border: none;
+  }
+  .filtros, .cadastros {
+    font-size: 1.3rem;
+    text-align: center;
+  }
+  .campos {
+    height: 2.5rem;
+    padding-left: 0.7rem;
+    font-size: 1.5rem;
+  }
+  .filtros {
+    order: 2;
+    margin: 2.2rem 0;
+  }
+  .cadastros {
+    order: 0;
+    margin-bottom: 3.2rem;
+  }
+  .container-campos-visor {
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+  } 
+  .cadastros .container-campos-visor .campos-visor {
+    width: 90%;
+  }
 }

@@ -42,11 +42,15 @@
             <div class="campos-visor">
               <label for="filtrar"></label>
               <select id="visorFiltrar" class="campos" name="filtrar">
-                <option value="Usuario">Usuario</option>
-                <option value="Atividade">Atividade</option>
-                <option value="Tipo de Atividade">Tipo de Atividade</option>
+                <option value="usuario">Usuario</option>
+                <option value="atividade">Atividade</option>
+                <option value="tipoAtividade">Tipo de Atividade</option>
               </select>
-              <img src="./assets/img/vassoura.svg" alt="procurar" />
+              <img
+                onclick="fnLimparFiltro()"
+                src="./assets/img/vassoura.svg"
+                alt="procurar"
+              />
             </div>
           </div>
         </div>
@@ -118,15 +122,15 @@
           </div>
         </div>
       </section>
-      <section class="tabela">
+      <section id="secaoTabela" class="tabela">
         <div id="divTabela">
           <table id="tabela">
             <thead>
               <tr id="cabecalho">
-                <th>USUARIO</th>
-                <th>ATIVIDADE</th>
-                <th>TIPO DE ATIVIDADE</th>
-                <th>TEMPO</th>
+                <th onclick="fnOrdenaTabela(0)">USUARIO</th>
+                <th onclick="fnOrdenaTabela(1)">ATIVIDADE</th>
+                <th onclick="fnOrdenaTabela(2)">TIPO DE ATIVIDADE</th>
+                <th onclick="fnOrdenaTabela(3)">TEMPO</th>
                 <th>.</th>
                 <th>.</th>
               </tr>
