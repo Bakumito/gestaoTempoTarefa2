@@ -79,7 +79,9 @@
           </div>
           <div class="container-campos-visor">
             <div class="campos-visor">
-              <label for="tipoAtividade">Tipo de Atividade</label>
+              <label for="tipoAtividade"
+                >Tipo de Atividade</span></label
+              >
               <input
                 id="visorTipoAtividade"
                 class="campos"
@@ -105,7 +107,7 @@
               <label for="pausar">pausar</label>
               <input
                 id="botaoPausar"
-                class="botao pausado"
+                class="botao"
                 type="button"
                 name="pausar"
               />
@@ -122,17 +124,18 @@
           </div>
         </div>
       </section>
-      <section id="secaoTabela" class="tabela">
-        <div id="divTabela">
+      <section class="tabela">
+        <div id="secaoTabela" class="container-tabela">
           <table id="tabela">
             <thead>
               <tr id="cabecalho">
                 <th onclick="fnOrdenaTabela(0)">USUARIO</th>
                 <th onclick="fnOrdenaTabela(1)">ATIVIDADE</th>
-                <th onclick="fnOrdenaTabela(2)">TIPO DE ATIVIDADE</th>
+                <th onclick="fnOrdenaTabela(2)">TIPO<span class="tela-pequena">...</span
+                  ><span class="tela-grande"> DE ATIVIDADE</span></th>
                 <th onclick="fnOrdenaTabela(3)">TEMPO</th>
-                <th>.</th>
-                <th>.</th>
+                <th></th>
+                <th></th>
               </tr>
             </thead>
             <tbody id="tabelaCorpo"></tbody>

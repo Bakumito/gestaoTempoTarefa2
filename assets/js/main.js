@@ -63,11 +63,11 @@ ID('botaoPausar').addEventListener('click', e => {
       ID('botaoPausar').classList.remove('pausado')
       clearInterval(contadorSegundos)
       fnContador()
-      ID('botaoPausar').firstElementChild.innerText = 'pausar'
+      ID('botaoPausar').parentElement.firstElementChild.innerText = 'pausar'
     } else {
       clearInterval(contadorSegundos)
       ID('botaoPausar').classList.add('pausado')
-      ID('botaoPausar').firstElementChild.innerText = 'retomar'
+      ID('botaoPausar').parentElement.firstElementChild.innerText = 'retomar'
     }
   }
 })
