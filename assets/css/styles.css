@@ -262,6 +262,7 @@ thead tr:first-child {
 
   .cadastros .campos {
     height: 2.7rem;
+    padding-left: 1rem;
   }
 
   .cadastros .container-campos-visor:last-child .campos-visor {
@@ -357,7 +358,11 @@ thead tr:first-child {
 
   td {
     padding: 1rem;
-    font-size: 1.3rem;
+    font-size: 1rem;
     overflow: scroll;
+  }
+
+  td:nth-child(4) {
+    font-size: 1.3rem;
   }
 }

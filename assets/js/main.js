@@ -107,17 +107,11 @@ const fnInsereLinha = () => {
     inputer().editar,
     inputer().deletar
   )
-
   fnAddLinha()
   ID('relogio').innerText = '00:00:00'
-
   ID('visorUsuario').removeAttribute('disabled', '')
   ID('visorAtividade').removeAttribute('disabled', '')
   ID('visorTipoAtividade').removeAttribute('disabled', '')
-
-  ID('visorUsuario').value = ''
-  ID('visorAtividade').value = ''
-  ID('visorTipoAtividade').value = ''
 }
 
 const fnFinaliza = () => {
@@ -165,6 +159,9 @@ const fnFinaliza = () => {
       if (linhasRepetidas > 1 && tr.length == linhasRepetidas) fnInsereLinha()
     }
   }
+  ID('visorUsuario').value = ''
+  ID('visorAtividade').value = ''
+  ID('visorTipoAtividade').value = ''
 }
 
 ID('botaoFinalizar').addEventListener('click', e => {
@@ -243,10 +240,6 @@ ID('visorProcurar').addEventListener('keyup', e => {
   }
 })
 
-// iconeProcurar.addEventListener('click', e => {
-//   fnProcurar()
-// })
-
 const fnProcurar = () => {
   const filtro = ID('visorProcurar').value.toUpperCase().trim()
   var td, i, colN
@@ -275,11 +268,11 @@ const fnLimparFiltro = () => {
       tr[i].style.display = ''
     }
   }
+  ID('visorProcurar').value = ''
 }
 
 const fnDeletarLinha = estaLinha => {
   tabela.deleteRow(estaLinha.parentNode.rowIndex)
-
   if (!tuplas[1]) secaoTabela.style.display = 'none'
 }
 
