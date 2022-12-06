@@ -196,37 +196,39 @@ const fnOrdenaTabela = coluna => {
 const fnProcurar = () => {
   const filtro = $('#visorProcurar').val().toUpperCase().trim()
   var td, i, colN
+  let visorFiltrar = $('#visorFiltrar').val()
 
-  for (i = 0; i < $('#tabela tr').length; i++) {
-    if ($('#visorFiltrar').val() == 'usuario') colN = 0
-    if ($('#visorFiltrar').val() == 'atividade') colN = 1
-    if ($('#visorFiltrar').val() == 'tipoAtividade') colN = 2
-    td = $('#tabela tr')[i].getElementsByTagName('td')[colN]
+  $('#tabela tr').each((i, e) => {
+    if (visorFiltrar == 'usuario') colN = 1
+    if (visorFiltrar == 'atividade') colN = 2
+    if (visorFiltrar == 'tipoAtividade') colN = 3
+
+    td = $(`#tabela tr:nth-child(${i}) td:nth-child(${colN})`)
+
     if (td) {
-      if (td.innerHTML.toUpperCase().trim() == filtro) {
-        $('#tabela tr')[i].show()
+      if (td.text().toUpperCase().trim() == filtro) {
+        $(e).show()
       } else {
-        $('#tabela tr')[i].hide()
+        $(e).hide()
       }
     }
-  }
+  })
 }
 
 const fnLimparFiltro = () => {
-  var td, i
-
-  for (i = 0; i < tr.length; i++) {
-    td = $('#tabela tr')[i].getElementsByTagName('td')[1]
+  $('#tabela tr').each((i, e) => {
+    var td = $(`#tabela tr:nth-child(${i}) td`)
     if (td) {
-      $('#tabela tr')[i].show()
+      $(e).show()
     }
-  }
+  })
+
   $('#visorProcurar').val('')
 }
 
 const fnDeletarLinha = estaLinha => {
-  tabela.deleteRow(estaLinha.parentNode.rowIndex)
-  if (!$('#tabela tr')[1]) secaoTabela.style.display = 'none'
+  $(estaLinha).parent().remove()
+  if (!$('#tabela tr')[1]) $('#secaoTabela').hide()
 }
 
 const fnEditarLinha = estaLinha => {
