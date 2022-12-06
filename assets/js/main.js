@@ -6,10 +6,7 @@ let segundos = 0
 let contadorSegundos
 let linhas = []
 
-const tr = ID('tabela').getElementsByTagName('tr')
-const tuplas = ID('tabela').rows
-
-if (!tuplas[1]) ID('secaoTabela').style.display = 'none'
+if (!$('#tabela tr')[1]) $('#secaoTabela').hide()
 
 const fnVisor = segundos => {
   const tempo = new Date(segundos * 1000)
@@ -22,62 +19,27 @@ const fnVisor = segundos => {
 const fnContador = () => {
   contadorSegundos = setInterval(() => {
     segundos++
-    ID('relogio').innerHTML = fnVisor(segundos)
+    $('#relogio').text(fnVisor(segundos))
   }, 1000)
 }
 
 const fnInicia = () => {
-  if (!ID('visorUsuario').value || !ID('visorAtividade').value) {
+  if (!$('#visorUsuario').val() || !$('#visorAtividade').val()) {
     alert('é necessário preencher o usuário e a atividade.')
   } else {
     clearInterval(contadorSegundos)
     fnContador()
-    ID('visorUsuario').setAttribute('disabled', '')
-    ID('visorAtividade').setAttribute('disabled', '')
-    ID('visorTipoAtividade').setAttribute('disabled', '')
-    ID('botaoIniciar').setAttribute('disabled', '')
+    $('.cadastros input').prop('disabled', true)
+    $('#botaoIniciar').prop('disabled', true)
   }
 }
 
-ID('botaoIniciar').addEventListener('click', e => {
-  fnInicia()
-})
-
-document.addEventListener('keyup', e => {
-  if (e.keyCode === 13) {
-    if (
-      e.target.id === ID('visorUsuario').id ||
-      e.target.id === ID('visorAtividade').id ||
-      e.target.id === ID('visorTipoAtividade').id
-    ) {
-      fnInicia()
-    }
-  }
-})
-
-ID('botaoPausar').addEventListener('click', e => {
-  if (!ID('visorUsuario').value || !ID('visorAtividade').value) {
-    alert('é necessário preencher o usuário e a atividade.')
-  } else {
-    if (ID('botaoPausar').classList.contains('pausado')) {
-      ID('botaoPausar').classList.remove('pausado')
-      clearInterval(contadorSegundos)
-      fnContador()
-      ID('botaoPausar').parentElement.firstElementChild.innerText = 'pausar'
-    } else {
-      clearInterval(contadorSegundos)
-      ID('botaoPausar').classList.add('pausado')
-      ID('botaoPausar').parentElement.firstElementChild.innerText = 'retomar'
-    }
-  }
-})
-
 const inputer = () => {
   return {
-    nome: ID('visorUsuario').value.toUpperCase().trim(),
-    atividade: ID('visorAtividade').value.toUpperCase().trim(),
-    tipoAtividade: ID('visorTipoAtividade').value.toUpperCase().trim(),
-    tempo: ID('relogio').innerText,
+    nome: $('#visorUsuario').val().toUpperCase().trim(),
+    atividade: $('#visorAtividade').val().toUpperCase().trim(),
+    tipoAtividade: $('#visorTipoAtividade').val().toUpperCase().trim(),
+    tempo: $('#relogio').text(),
     editar: '',
     deletar: ''
   }
@@ -108,92 +70,89 @@ const fnInsereLinha = () => {
     inputer().deletar
   )
   fnAddLinha()
-  ID('relogio').innerText = '00:00:00'
-  ID('visorUsuario').removeAttribute('disabled', '')
-  ID('visorAtividade').removeAttribute('disabled', '')
-  ID('visorTipoAtividade').removeAttribute('disabled', '')
+  $('#relogio').text('00:00:00')
+  $('.cadastros input').prop('disabled', false)
 }
 
 const fnFinaliza = () => {
+  const filtroNome = $('#visorUsuario').val().toUpperCase().trim()
+  const filtroAtividade = $('#visorAtividade').val().toUpperCase().trim()
+  const filtroTipoAtividade = $('#visorTipoAtividade')
+    .val()
+    .toUpperCase()
+    .trim()
+  let linhasRepetidas = 1
   clearInterval(contadorSegundos)
   segundos = 0
-  ID('botaoIniciar').removeAttribute('disabled', '')
-  let linhasRepetidas = 1
-  if (!ID('visorUsuario').value || !ID('visorAtividade').value) {
+  $('#botaoIniciar').prop('disabled', false)
+  if (!$('#visorUsuario').val() || !$('#visorAtividade').val()) {
     alert('é necessário preencher o usuário e a atividade.')
     return
   } else {
-    if (!tr[1]) {
+    if (!$('#tabela tr')[1]) {
       fnInsereLinha()
     } else {
-      const filtroNome = ID('visorUsuario').value.toUpperCase().trim()
-      const filtroAtividade = ID('visorAtividade').value.toUpperCase().trim()
-      const filtroTipoAtividade = ID('visorTipoAtividade')
-        .value.toUpperCase()
-        .trim()
-      for (let i = 1; i < tr.length; i++) {
-        let td = tr[i].getElementsByTagName('td')
-        if (
-          td[0].innerHTML.toUpperCase().trim() != filtroNome ||
-          td[1].innerHTML.toUpperCase().trim() != filtroAtividade ||
-          td[2].innerHTML.toUpperCase().trim() != filtroTipoAtividade
-        ) {
-          linhasRepetidas++
-        } else {
-          let tempoTd = td[3].innerHTML.split(':')
-          let tempoCronometro = ID('relogio').innerHTML.split(':')
-          td[3].innerHTML = fnVisor(
-            Number(tempoTd[0] * 360) +
-              Number(tempoTd[1] * 60) +
-              Number(tempoTd[2]) +
-              Number(tempoCronometro[0] * 360) +
-              Number(tempoCronometro[1] * 60) +
-              Number(tempoCronometro[2])
-          )
-          ID('relogio').innerHTML = '00:00:00'
-          ID('visorUsuario').removeAttribute('disabled', '')
-          ID('visorAtividade').removeAttribute('disabled', '')
-          ID('visorTipoAtividade').removeAttribute('disabled', '')
+      $('#tabela tr').each((i, e) => {
+        const filtrado = $(e).find('td').text().toUpperCase().trim()
+        if (i != 0) {
+          if (
+            filtrado[0] != filtroNome ||
+            filtrado[1] != filtroAtividade ||
+            filtrado[2] != filtroTipoAtividade
+          ) {
+            linhasRepetidas++
+          } else {
+            let tempoTd = $(e).find('td:nth-child(4)').text().split(':')
+            let tempoCronometro = $('#relogio').text().split(':')
+            $(e)
+              .find('td:nth-child(4)')
+              .text(
+                fnVisor(
+                  Number(tempoTd[0] * 360) +
+                    Number(tempoTd[1] * 60) +
+                    Number(tempoTd[2]) +
+                    Number(tempoCronometro[0] * 360) +
+                    Number(tempoCronometro[1] * 60) +
+                    Number(tempoCronometro[2])
+                )
+              )
+            $('#relogio').text('00:00:00')
+            $('.cadastros input').prop('disabled', false)
+          }
         }
+      })
+      if (linhasRepetidas > 1 && $('#tabela tr').length == linhasRepetidas) {
+        fnInsereLinha()
       }
-      if (linhasRepetidas > 1 && tr.length == linhasRepetidas) fnInsereLinha()
     }
   }
-  ID('visorUsuario').value = ''
-  ID('visorAtividade').value = ''
-  ID('visorTipoAtividade').value = ''
+  $('.cadastros input').val('')
 }
 
-ID('botaoFinalizar').addEventListener('click', e => {
-  fnFinaliza()
-})
-
 function fnAddLinha() {
-  const tr = ID('tabelaCorpo').insertRow(-1)
-
-  ID('secaoTabela').style.display = ''
-
   let i = linhas.length - 1
 
-  const tdNome = document.createTextNode(linhas[i].nome)
-  const tdAtividade = document.createTextNode(linhas[i].atividade)
-  const tdTipoAtividade = document.createTextNode(linhas[i].tipoAtividade)
-  const tdTempo = document.createTextNode(linhas[i].tempo)
-  const tdEditar = document.createTextNode(linhas[i].editar)
-  const tdDeletar = document.createTextNode(linhas[i].deletar)
+  $('#tabelaCorpo').append(
+    $('<tr>')
+      .append($('<td>').append(linhas[i].nome))
+      .append($('<td>').append(linhas[i].atividade))
+      .append($('<td>').append(linhas[i].tipoAtividade))
+      .append($('<td>').append(linhas[i].tempo))
+      .append(
+        $('<td>')
+          .append(linhas[i].editar)
+          .addClass('icone-editar')
+          .attr('onclick', 'fnEditarLinha(this)')
+      )
+      .append(
+        $('<td>')
+          .append(linhas[i].deletar)
+          .addClass('icone-lixeira')
+          .attr('onClick', 'fnDeletarLinha(this)')
+      )
+  )
 
-  tr.insertCell(0).appendChild(tdNome)
-  tr.insertCell(1).appendChild(tdAtividade)
-  tr.insertCell(2).appendChild(tdTipoAtividade)
-  tr.insertCell(3).appendChild(tdTempo)
-  let tdBotaoEditar = tr.insertCell(4)
-  let tdBotaoDeletar = tr.insertCell(5)
-  tdBotaoEditar.appendChild(tdEditar)
-  tdBotaoEditar.setAttribute('onclick', 'fnEditarLinha(this)')
-  tdBotaoEditar.setAttribute('class', 'icone-editar')
-  tdBotaoDeletar.appendChild(tdDeletar)
-  tdBotaoDeletar.setAttribute('onclick', 'fnDeletarLinha(this)')
-  tdBotaoDeletar.setAttribute('class', 'icone-lixeira')
+  $('#secaoTabela').show()
 }
 
 const fnOrdenaTabela = coluna => {
@@ -203,26 +162,35 @@ const fnOrdenaTabela = coluna => {
   direcao = 'asc'
   while (trocando) {
     trocando = false
-    for (i = 1; i < tuplas.length - 1; i++) {
+    for (i = 1; i < $('#tabela tr').length - 1; i++) {
       deveTrocar = false
 
-      tupla1 = tuplas[i].getElementsByTagName('td')[coluna]
-      tupla2 = tuplas[i + 1].getElementsByTagName('td')[coluna]
+      // tupla1 = $('#tabela tr')[i].getElementsByTagName('td')[coluna]
+      // tupla2 = $('#tabela tr')[i + 1].getElementsByTagName('td')[coluna]
+      tupla1 = $(`#tabela tr:nth-child(${i}) td:nth-child(${coluna})`)
+      tupla2 = $(`#tabela tr:nth-child(${i + 1}) td:nth-child(${coluna})`)
 
       if (direcao == 'asc') {
-        if (tupla1.innerHTML > tupla2.innerHTML) {
+        if (tupla1.text() > tupla2.text()) {
           deveTrocar = true
           break
         }
       } else if (direcao == 'desc') {
-        if (tupla1.innerHTML < tupla2.innerHTML) {
+        if (tupla1.text() < tupla2.text()) {
           deveTrocar = true
           break
         }
       }
     }
     if (deveTrocar) {
-      tuplas[i].parentNode.insertBefore(tuplas[i + 1], tuplas[i])
+      let tz = $(`#tabela tr:nth-child(${i + 1})`)
+      let tz2 = $(`#tabela tr:nth-child(${i})`)
+      $('#tabela tr')
+        [i].closest('tbody')
+        .insertBefore(
+          $(`#tabela tr:nth-child(${i + 1})`),
+          $(`#tabela tr:nth-child(${i})`)
+        )
       trocando = true
       trocador++
     } else {
@@ -234,26 +202,20 @@ const fnOrdenaTabela = coluna => {
   }
 }
 
-ID('visorProcurar').addEventListener('keyup', e => {
-  if (e.keyCode === 13) {
-    fnProcurar()
-  }
-})
-
 const fnProcurar = () => {
-  const filtro = ID('visorProcurar').value.toUpperCase().trim()
+  const filtro = $('#visorProcurar').val().toUpperCase().trim()
   var td, i, colN
 
-  for (i = 0; i < tr.length; i++) {
-    if (ID('visorFiltrar').value == 'usuario') colN = 0
-    if (ID('visorFiltrar').value == 'atividade') colN = 1
-    if (ID('visorFiltrar').value == 'tipoAtividade') colN = 2
-    td = tr[i].getElementsByTagName('td')[colN]
+  for (i = 0; i < $('#tabela tr').length; i++) {
+    if ($('#visorFiltrar').val() == 'usuario') colN = 0
+    if ($('#visorFiltrar').val() == 'atividade') colN = 1
+    if ($('#visorFiltrar').val() == 'tipoAtividade') colN = 2
+    td = $('#tabela tr')[i].getElementsByTagName('td')[colN]
     if (td) {
       if (td.innerHTML.toUpperCase().trim() == filtro) {
-        tr[i].style.display = ''
+        $('#tabela tr')[i].show()
       } else {
-        tr[i].style.display = 'none'
+        $('#tabela tr')[i].hide()
       }
     }
   }
@@ -263,21 +225,22 @@ const fnLimparFiltro = () => {
   var td, i
 
   for (i = 0; i < tr.length; i++) {
-    td = tr[i].getElementsByTagName('td')[1]
+    td = $('#tabela tr')[i].getElementsByTagName('td')[1]
     if (td) {
-      tr[i].style.display = ''
+      $('#tabela tr')[i].show()
     }
   }
-  ID('visorProcurar').value = ''
+  $('#visorProcurar').val('')
 }
 
 const fnDeletarLinha = estaLinha => {
   tabela.deleteRow(estaLinha.parentNode.rowIndex)
-  if (!tuplas[1]) secaoTabela.style.display = 'none'
+  if (!$('#tabela tr')[1]) secaoTabela.style.display = 'none'
 }
 
 const fnEditarLinha = estaLinha => {
-  const col = tuplas[estaLinha.parentNode.rowIndex].getElementsByTagName('td')
+  const col =
+    $('#tabela tr')[estaLinha.parentNode.rowIndex].getElementsByTagName('td')
   const novoID = estaLinha.parentNode.rowIndex
 
   let temp = col[0].innerText
@@ -334,3 +297,32 @@ const fnEditarLinha = estaLinha => {
     }
   })
 }
+
+$('#botaoIniciar').on('click', fnInicia)
+
+$('#botaoFinalizar').on('click', fnFinaliza)
+
+$('.cadastros input').on('keyup', e => {
+  if (e.keyCode === 13) fnInicia()
+})
+
+$('#visorProcurar').on('keyup', e => {
+  if (e.keyCode === 13) fnProcurar()
+})
+
+$('#botaoPausar').on('click', e => {
+  if (!$('#visorUsuario').val() || !$('#visorAtividade').val()) {
+    alert('é necessário preencher o usuário e a atividade.')
+  } else {
+    if ($('#botaoPausar').hasClass('pausado')) {
+      $('#botaoPausar').removeClass('pausado')
+      clearInterval(contadorSegundos)
+      fnContador()
+      $('#botaoPausar').prev().text('pausar')
+    } else {
+      clearInterval(contadorSegundos)
+      $('#botaoPausar').addClass('pausado')
+      $('#botaoPausar').prev().text('retomar')
+    }
+  }
+})

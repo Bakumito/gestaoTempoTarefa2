@@ -6,6 +6,8 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <link rel="stylesheet" href="./assets/css/styles.css" />
 
+    <script defer src="./assets/js/jquery.js"></script>
+    <!-- <script defer src="https://code.jquery.com/jquery-3.6.1.min.js"></script> -->
     <script defer src="./assets/js/main.js"></script>
 
     <title>Gestao de Tempo por Tarefas</title>
@@ -79,9 +81,7 @@
           </div>
           <div class="container-campos-visor">
             <div class="campos-visor">
-              <label for="tipoAtividade"
-                >Tipo de Atividade</span></label
-              >
+              <label for="tipoAtividade">Tipo de Atividade</label>
               <input
                 id="visorTipoAtividade"
                 class="campos"
@@ -129,11 +129,13 @@
           <table id="tabela">
             <thead>
               <tr id="cabecalho">
-                <th onclick="fnOrdenaTabela(0)">USUARIO</th>
-                <th onclick="fnOrdenaTabela(1)">ATIVIDADE</th>
-                <th onclick="fnOrdenaTabela(2)">TIPO<span class="tela-pequena">...</span
-                  ><span class="tela-grande"> DE ATIVIDADE</span></th>
-                <th onclick="fnOrdenaTabela(3)">TEMPO</th>
+                <th onclick="fnOrdenaTabela(1)">USUARIO</th>
+                <th onclick="fnOrdenaTabela(2)">ATIVIDADE</th>
+                <th onclick="fnOrdenaTabela(3)">
+                  TIPO<span class="tela-pequena">...</span
+                  ><span class="tela-grande"> DE ATIVIDADE</span>
+                </th>
+                <th onclick="fnOrdenaTabela(4)">TEMPO</th>
                 <th></th>
                 <th></th>
               </tr>
