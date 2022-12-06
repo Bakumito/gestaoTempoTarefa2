@@ -165,8 +165,6 @@ const fnOrdenaTabela = coluna => {
     for (i = 1; i < $('#tabela tr').length - 1; i++) {
       deveTrocar = false
 
-      // tupla1 = $('#tabela tr')[i].getElementsByTagName('td')[coluna]
-      // tupla2 = $('#tabela tr')[i + 1].getElementsByTagName('td')[coluna]
       tupla1 = $(`#tabela tr:nth-child(${i}) td:nth-child(${coluna})`)
       tupla2 = $(`#tabela tr:nth-child(${i + 1}) td:nth-child(${coluna})`)
 
@@ -183,14 +181,7 @@ const fnOrdenaTabela = coluna => {
       }
     }
     if (deveTrocar) {
-      let tz = $(`#tabela tr:nth-child(${i + 1})`)
-      let tz2 = $(`#tabela tr:nth-child(${i})`)
-      $('#tabela tr')
-        [i].closest('tbody')
-        .insertBefore(
-          $(`#tabela tr:nth-child(${i + 1})`),
-          $(`#tabela tr:nth-child(${i})`)
-        )
+      $(tupla2).parent().insertBefore($(tupla1).parent())
       trocando = true
       trocador++
     } else {
