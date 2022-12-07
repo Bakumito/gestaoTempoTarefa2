@@ -195,7 +195,7 @@ const fnOrdenaTabela = coluna => {
 
 const fnProcurar = () => {
   const filtro = $('#visorProcurar').val().toUpperCase().trim()
-  var td, i, colN
+  let filtrado, colN
   let visorFiltrar = $('#visorFiltrar').val()
 
   $('#tabela tr').each((i, e) => {
@@ -203,10 +203,10 @@ const fnProcurar = () => {
     if (visorFiltrar == 'atividade') colN = 2
     if (visorFiltrar == 'tipoAtividade') colN = 3
 
-    td = $(`#tabela tr:nth-child(${i}) td:nth-child(${colN})`)
+    filtrado = $(`#tabela tr:nth-child(${i}) td:nth-child(${colN})`)
 
-    if (td) {
-      if (td.text().toUpperCase().trim() == filtro) {
+    if (filtrado) {
+      if (filtrado.text().toUpperCase().trim() == filtro) {
         $(e).show()
       } else {
         $(e).hide()
@@ -217,8 +217,8 @@ const fnProcurar = () => {
 
 const fnLimparFiltro = () => {
   $('#tabela tr').each((i, e) => {
-    var td = $(`#tabela tr:nth-child(${i}) td`)
-    if (td) {
+    let verificaFiltrado = $(`#tabela tr:nth-child(${i}) td`)
+    if (verificaFiltrado) {
       $(e).show()
     }
   })
@@ -232,61 +232,73 @@ const fnDeletarLinha = estaLinha => {
 }
 
 const fnEditarLinha = estaLinha => {
-  const col =
-    $('#tabela tr')[estaLinha.parentNode.rowIndex].getElementsByTagName('td')
-  const novoID = estaLinha.parentNode.rowIndex
+  const novoID = $(estaLinha).parent().index() + 1
 
-  let temp = col[0].innerText
-  let temp1 = col[1].innerText
-  let temp2 = col[2].innerText
+  const fnAchaColuna = (estaLinha, coluna) => {
+    const col = $(estaLinha).parent().find(`td:nth-child(${coluna})`)
+    return col
+  }
 
-  col[0].innerHTML = `<input
-  id="editarUsuario${novoID}"
-  type="text"
-  name="usuarioEditado"
-  placeholder="${col[0].innerText}"
-/>`
+  const criaInput = (estaLinha, coluna) => {
+    const inputCriado = `<input
+      id="editar${coluna}${novoID}"
+      class="inputEditar"
+      type="text"
+      name="usuarioEditado"
+      placeholder="${fnAchaColuna(estaLinha, coluna).text()}"
+    />`
+    return inputCriado
+  }
 
-  col[1].innerHTML = `<input
-  id="editarAtividade${novoID}"
-  type="text"
-  name="AtividadeEditado"
-  placeholder="${col[1].innerText}"
-/>`
+  let textoUsuario = fnAchaColuna(estaLinha, 1).text()
+  let textoAtividade = fnAchaColuna(estaLinha, 2).text()
+  let textoTipoAtividade = fnAchaColuna(estaLinha, 3).text()
 
-  col[2].innerHTML = `<input
-  id="editarTipoAtividade${novoID}"
-  type="text"
-  name="tipoAtividadeEditado"
-  placeholder="${col[2].innerText}"
-/>`
+  for (let i = 1; i <= 3; i++) {
+    fnAchaColuna(estaLinha, i).html(criaInput(estaLinha, i))
+  }
 
-  document.addEventListener('keyup', e => {
+  const removeInput = () => {
+    $(estaLinha).parent().find('td').find($('.inputEditar')).remove()
+  }
+
+  $('.inputEditar').on('keyup', e => {
     if (e.keyCode === 13) {
-      if (!document.getElementById('editarUsuario' + novoID).value) {
-        col[0].innerText = temp
-      } else {
-        col[0].innerText = document
-          .getElementById('editarUsuario' + novoID)
-          .value.toUpperCase()
+      let inputUsuario = $(`#editar1${novoID}`).val()
+      let inputAtividade = $(`#editar2${novoID}`).val()
+      let inputTipoAtividade = $(`#editar3${novoID}`).val()
+      const fnConstroiValor = (col, texto) => {
+        switch (col) {
+          case 1:
+            if (!inputUsuario) {
+              texto = textoUsuario
+            } else {
+              texto = inputUsuario
+            }
+            fnAchaColuna(estaLinha, col).text(texto)
+            break
+          case 2:
+            if (!inputAtividade) {
+              texto = textoAtividade
+            } else {
+              texto = inputAtividade
+            }
+            fnAchaColuna(estaLinha, col).text(texto)
+            break
+          case 3:
+            if (!inputTipoAtividade) {
+              texto = textoTipoAtividade
+            } else {
+              texto = inputTipoAtividade
+            }
+            fnAchaColuna(estaLinha, col).text(texto)
+            break
+        }
       }
-      if (!document.getElementById('editarAtividade' + novoID).value) {
-        col[1].innerText = temp1
-      } else {
-        col[1].innerText = document
-          .getElementById('editarAtividade' + novoID)
-          .value.toUpperCase()
-      }
-      if (!document.getElementById('editarTipoAtividade' + novoID).value) {
-        col[2].innerText = temp2
-      } else {
-        col[2].innerText = document
-          .getElementById('editarTipoAtividade' + novoID)
-          .value.toUpperCase()
-      }
-      temp = col[0].innerText
-      temp1 = col[1].innerText
-      temp2 = col[2].innerText
+      removeInput()
+      fnConstroiValor(1, textoUsuario)
+      fnConstroiValor(2, textoAtividade)
+      fnConstroiValor(3, textoTipoAtividade)
     }
   })
 }
