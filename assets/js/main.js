@@ -1,10 +1,7 @@
-const ID = element => {
-  return document.getElementById(element)
-}
-
 let segundos = 0
 let contadorSegundos
 let linhas = []
+const botaoPausar = $('#botaoPausar')
 
 if (!$('#tabela tr')[1]) $('#secaoTabela').hide()
 
@@ -56,18 +53,17 @@ class Linha {
   }
 }
 
-const fnLinhas = (nome, atividade, tipoAtividade, tempo, editar, deletar) => {
-  linhas.push(new Linha(nome, atividade, tipoAtividade, tempo, editar, deletar))
-}
-
 const fnInsereLinha = () => {
-  fnLinhas(
-    inputer().nome,
-    inputer().atividade,
-    inputer().tipoAtividade,
-    inputer().tempo,
-    inputer().editar,
-    inputer().deletar
+  const inputers = inputer()
+  linhas.push(
+    new Linha(
+      inputers.nome,
+      inputers.atividade,
+      inputers.tipoAtividade,
+      inputers.tempo,
+      inputers.editar,
+      inputers.deletar
+    )
   )
   fnAddLinha()
   $('#relogio').text('00:00:00')
@@ -235,19 +231,17 @@ const fnEditarLinha = estaLinha => {
   const novoID = $(estaLinha).parent().index() + 1
 
   const fnAchaColuna = (estaLinha, coluna) => {
-    const col = $(estaLinha).parent().find(`td:nth-child(${coluna})`)
-    return col
+    return $(estaLinha).parent().find(`td:nth-child(${coluna})`)
   }
 
   const criaInput = (estaLinha, coluna) => {
-    const inputCriado = `<input
+    return `<input
       id="editar${coluna}${novoID}"
       class="inputEditar"
       type="text"
       name="usuarioEditado"
       placeholder="${fnAchaColuna(estaLinha, coluna).text()}"
     />`
-    return inputCriado
   }
 
   let textoUsuario = fnAchaColuna(estaLinha, 1).text()
@@ -267,38 +261,16 @@ const fnEditarLinha = estaLinha => {
       let inputUsuario = $(`#editar1${novoID}`).val()
       let inputAtividade = $(`#editar2${novoID}`).val()
       let inputTipoAtividade = $(`#editar3${novoID}`).val()
-      const fnConstroiValor = (col, texto) => {
-        switch (col) {
-          case 1:
-            if (!inputUsuario) {
-              texto = textoUsuario
-            } else {
-              texto = inputUsuario
-            }
-            fnAchaColuna(estaLinha, col).text(texto)
-            break
-          case 2:
-            if (!inputAtividade) {
-              texto = textoAtividade
-            } else {
-              texto = inputAtividade
-            }
-            fnAchaColuna(estaLinha, col).text(texto)
-            break
-          case 3:
-            if (!inputTipoAtividade) {
-              texto = textoTipoAtividade
-            } else {
-              texto = inputTipoAtividade
-            }
-            fnAchaColuna(estaLinha, col).text(texto)
-            break
-        }
-      }
       removeInput()
-      fnConstroiValor(1, textoUsuario)
-      fnConstroiValor(2, textoAtividade)
-      fnConstroiValor(3, textoTipoAtividade)
+      fnAchaColuna(estaLinha, 1).text(
+        !inputUsuario ? textoUsuario : inputUsuario
+      )
+      fnAchaColuna(estaLinha, 2).text(
+        !inputAtividade ? textoAtividade : inputAtividade
+      )
+      fnAchaColuna(estaLinha, 3).text(
+        !inputTipoAtividade ? textoTipoAtividade : inputTipoAtividade
+      )
     }
   })
 }
@@ -315,19 +287,19 @@ $('#visorProcurar').on('keyup', e => {
   if (e.keyCode === 13) fnProcurar()
 })
 
-$('#botaoPausar').on('click', e => {
+botaoPausar.on('click', e => {
   if (!$('#visorUsuario').val() || !$('#visorAtividade').val()) {
     alert('é necessário preencher o usuário e a atividade.')
   } else {
-    if ($('#botaoPausar').hasClass('pausado')) {
-      $('#botaoPausar').removeClass('pausado')
+    if (botaoPausar.hasClass('pausado')) {
+      botaoPausar.removeClass('pausado')
       clearInterval(contadorSegundos)
       fnContador()
-      $('#botaoPausar').prev().text('pausar')
+      botaoPausar.prev().text('pausar')
     } else {
       clearInterval(contadorSegundos)
-      $('#botaoPausar').addClass('pausado')
-      $('#botaoPausar').prev().text('retomar')
+      botaoPausar.addClass('pausado')
+      botaoPausar.prev().text('retomar')
     }
   }
 })
